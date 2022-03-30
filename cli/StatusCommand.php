@@ -52,7 +52,6 @@ EOF
         $plugin = new GitSync();
         $this->output->writeln('');
 
-
         $this->console_header('plugin runtime information:');
         $info = $plugin->getRuntimeInformation();
         $info['isGitInitialized'] = Helper::isGitInitialized();

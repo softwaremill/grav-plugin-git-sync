@@ -4,6 +4,7 @@ namespace Grav\Plugin;
 
 use Composer\Autoload\ClassLoader;
 use Grav\Common\Config\Config;
+use Grav\Common\Config\Setup;
 use Grav\Common\Data\Data;
 use Grav\Common\Grav;
 use Grav\Common\Page\Interfaces\PageInterface;
@@ -234,6 +235,10 @@ class GitSyncPlugin extends Plugin
      */
     public function synchronize()
     {
+        if ($this->isDev()) {
+            return true;
+        }
+
         if (!Helper::isGitInstalled() || !Helper::isGitInitialized()) {
             return true;
         }
@@ -486,5 +491,10 @@ class GitSyncPlugin extends Plugin
         }
 
         return bin2hex($bytes);
+    }
+
+    private function isDev(): bool
+    {
+        return !(isset(Setup::$environment) && Setup::$environment !== 'production');
     }
 }
